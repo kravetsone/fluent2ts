@@ -1,8 +1,11 @@
 {
     "name": "fluent2ts",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "module": "dist/index.js",
     "type": "module",
+    "scripts": {
+        "prepublishOnly": "tsc"
+    },
     "bin": {
         "fluent2ts": "dist/index.js"
     },
