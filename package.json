@@ -1,0 +1,24 @@
+{
+    "name": "fluent2ts",
+    "version": "0.0.1",
+    "module": "dist/index.js",
+    "type": "module",
+    "bin": {
+        "fluent2ts": "dist/index.js"
+    },
+    "devDependencies": {
+        "@fluent/bundle": "^0.18.0",
+        "@types/bun": "latest",
+        "@types/minimist": "^1.2.5",
+        "typescript": "^5.4.5"
+    },
+    "peerDependencies": {
+        "typescript": "^5.0.0"
+    },
+    "dependencies": {
+        "@fluent/syntax": "^0.19.0",
+        "glob": "^10.3.12",
+        "minimist": "^1.2.8",
+        "prettier": "^3.2.5"
+    }
+}
