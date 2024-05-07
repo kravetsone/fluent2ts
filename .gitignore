@@ -174,4 +174,5 @@ dist
 # Finder (MacOS) folder config
 .DS_Store
 test.ts
-en.ftl
+*.ftl
+src/locales.types.ts

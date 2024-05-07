@@ -47,14 +47,14 @@ for await (const path of paths) {
 		"export interface LocalesMap {",
 		...resource.body.filter(isMessage).map((entry) => {
 			if (!entry.value?.elements.filter(isPlaceable).length)
-				return `${entry.id.name}: never;`;
+				return `"${entry.id.name}": never;`;
 			return `"${entry.id.name}": {
 				${entry.value.elements
 					.filter(isPlaceable)
 					.map((element) => {
 						if (element.expression.type === "SelectExpression")
-							return `${element.expression.selector.id.name}: FluentVariable;`;
-						return `${element.expression.id.name}: FluentVariable;`;
+							return `"${element.expression.selector.id.name}": FluentVariable;`;
+						return `"${element.expression.id.name}": FluentVariable;`;
 					})
 					.join("\n")}
 			}`;
@@ -63,14 +63,14 @@ for await (const path of paths) {
 		"",
 		"export interface Message<Key extends keyof LocalesMap> {",
 		"	id: Key;",
-		"	value: Key;",
-		"	attributes: Record<string, Key>;",
+		"	value: Pattern | null;",
+		"	attributes: Record<string, Pattern>;",
 		"}",
 		"",
 		"export interface TypedFluentBundle extends FluentBundle {",
 		"	getMessage<Key extends keyof LocalesMap>(key: Key): Message<Key>;",
-		"	formatPattern<Key extends keyof LocalesMap>(key: Key, ...args: LocalesMap[Key][]): string;",
-		"	formatPattern<Key extends keyof LocalesMap>(key: Key, args?: LocalesMap[Key], errors?: Error[] | null): string;",
+		"	formatPattern<Key extends keyof LocalesMap>(key: Key, ...args: LocalesMap[Key] extends never ? [] : [args: LocalesMap[Key]]): string;",
+		"	formatPattern<Key extends keyof LocalesMap>(key: Key, args: LocalesMap[Key] extends never ? null : LocalesMap[Key], errors?: Error[] | null): string;",
 		"}",
 	];
 
