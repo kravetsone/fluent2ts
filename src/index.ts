@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import fs from "node:fs/promises";
 import {
 	type Entry,
@@ -74,7 +75,7 @@ for await (const path of paths) {
 	];
 
 	fs.writeFile(
-		args.o ?? "src/locales.types.ts",
+		args.o ?? args.output ?? "src/locales.types.ts",
 		await prettier.format(generated.join("\n"), {
 			tabWidth: 4,
 			parser: "typescript",
