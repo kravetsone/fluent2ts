@@ -42,7 +42,7 @@ for await (const path of paths) {
 	const resource = parse(file, {});
 
 	const generated: string[] = [
-		`import type { FluentBundle, FluentVariable } from "@fluent/bundle"`,
+		`import type { FluentBundle, FluentVariable, Message as FluentMessage } from "@fluent/bundle"`,
 		"",
 		"export interface LocalesMap {",
 		...resource.body.filter(isMessage).map((entry) => {
@@ -61,10 +61,8 @@ for await (const path of paths) {
 		}),
 		"}",
 		"",
-		"export interface Message<Key extends keyof LocalesMap> {",
+		"export interface Message<Key extends keyof LocalesMap> extends FluentMessage {",
 		"	id: Key;",
-		"	value: Pattern | null;",
-		"	attributes: Record<string, Pattern>;",
 		"}",
 		"",
 		"export interface TypedFluentBundle extends FluentBundle {",
