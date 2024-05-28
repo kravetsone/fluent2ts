@@ -38,7 +38,10 @@ You can also use `watch mode` and regenerate the types when the file has been mo
 
 <video controls autoplay>
   <source src="https://github.com/kravetsone/fluent2ts/assets/57632712/318350a0-318a-43a0-82f6-b70cdb431ab6" type="video/mp4">
+  https://github.com/kravetsone/fluent2ts/assets/57632712/318350a0-318a-43a0-82f6-b70cdb431ab6
 </video>
+
+https://github.com/kravetsone/fluent2ts/assets/57632712/318350a0-318a-43a0-82f6-b70cdb431ab6
 
 ### Output
 
