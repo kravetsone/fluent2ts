@@ -36,13 +36,18 @@ function isPlaceable(x: PatternElement): x is Placeable & {
 	);
 }
 
-for await (const path of paths) {
+async function processFile(path: string) {
 	const file = String(await fs.readFile(path));
 
 	const resource = parse(file, {});
 
 	const generated: string[] = [
-		`import type { FluentBundle, FluentVariable, Message as FluentMessage } from "@fluent/bundle"`,
+		"import type {",
+		"	FluentBundle, ",
+		"	FluentVariable, ",
+		"	Message as FluentMessage ",
+		"	// @ts-ignore",
+		`} from "@fluent/bundle"`,
 		"",
 		"export interface LocalesMap {",
 		...resource.body.filter(isMessage).map((entry) => {
@@ -81,4 +86,16 @@ for await (const path of paths) {
 			semi: false,
 		}),
 	);
+}
+
+for await (const path of paths) {
+	await processFile(path);
+	if (args.w || args.watch) {
+		const events = fs.watch(path);
+
+		for await (const event of events) {
+			if (event.eventType !== "change") continue;
+			await processFile(path);
+		}
+	}
 }
