@@ -52,17 +52,26 @@ async function processFile(path: string) {
 		"export interface LocalesMap {",
 		...resource.body.filter(isMessage).map((entry) => {
 			if (!entry.value?.elements.filter(isPlaceable).length)
-				return `"${entry.id.name}": never;`;
+			    return `"${entry.id.name}": never;`;
+
+			const entryNames = new Set<string>(
+			    entry.value.elements.filter(isPlaceable).map((element) => {
+			        if (element.expression.type === "SelectExpression") {
+			            return element.expression.selector.id.name
+			        }
+
+			        return element.expression.id.name
+			    })
+			)
+
+			const entryLines = Array
+				.from(entryNames.values())
+				.map((name) => `"${name}": FluentVariable;`)
+				.join("\n")
+
 			return `"${entry.id.name}": {
-				${entry.value.elements
-					.filter(isPlaceable)
-					.map((element) => {
-						if (element.expression.type === "SelectExpression")
-							return `"${element.expression.selector.id.name}": FluentVariable;`;
-						return `"${element.expression.id.name}": FluentVariable;`;
-					})
-					.join("\n")}
-			}`;
+				${entryLines}
+			};`
 		}),
 		"}",
 		"",
