@@ -1,6 +1,6 @@
 {
     "name": "fluent2ts",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "module": "dist/index.js",
     "type": "module",
     "scripts": {
